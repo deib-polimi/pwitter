@@ -3,20 +3,41 @@ package main
 import (
     "os"
     "fmt"
+    "github.com/affo/pwitter/api"
+
     "github.com/codegangsta/cli"
 )
 
 func main() {
-    api := Api{}
     app := cli.NewApp()
     app.Name = "pwitter"
     app.Usage = "Pwitter command line client"
+
+    ipFlag := cli.StringFlag {
+        Name: "ip",
+        Usage: "The IP address of the web server",
+        Value: "localhost",
+    }
+
+    portFlag := cli.IntFlag {
+        Name: "port, p",
+        Usage: "The port of the web server",
+        Value: 5000,
+    }
+
+    newApi := func(c *cli.Context) *api.Api {
+        ip := c.String("ip")
+        port := c.Int("port")
+        return api.New(ip, port)
+    }
 
     app.Commands = []cli.Command {
         {
             Name: "get",
             Usage: "Get Pweets",
             Flags: []cli.Flag {
+                ipFlag,
+                portFlag,
                 cli.Float64Flag {
                     Name: "max, M",
                     Usage: "Max polarity for Pweets returned",
@@ -31,13 +52,21 @@ func main() {
             Action: func(c *cli.Context) {
                 min := c.Float64("min")
                 max := c.Float64("max")
-                api.Get(min, max)
+                r, err := newApi(c).Get(min, max)
+
+                if err != nil {
+                    fmt.Println(err)
+                    return
+                }
+                fmt.Println(r)
             },
         },
         {
             Name: "post",
             Usage: "Create a new Pweet",
             Flags: []cli.Flag {
+                ipFlag,
+                portFlag,
                 cli.StringFlag {
                     Name: "user, u",
                     Usage: "User name for this Pweet",
@@ -56,7 +85,13 @@ func main() {
                     cli.ShowCommandHelp(c, "post")
                     return
                 }
-                api.Post(user, body)
+                r, err := newApi(c).Post(user, body)
+
+                if err != nil {
+                    fmt.Println(err)
+                    return
+                }
+                fmt.Println(r)
             },
         },
     }
