@@ -14,7 +14,7 @@ func main() {
     app.Usage = "Pwitter command line client"
 
     ipFlag := cli.StringFlag {
-        Name: "ip",
+        Name: "host, H",
         Usage: "The IP address of the web server",
         Value: "localhost",
     }
@@ -26,7 +26,7 @@ func main() {
     }
 
     newApi := func(c *cli.Context) *api.Api {
-        ip := c.String("ip")
+        ip := c.String("host")
         port := c.Int("port")
         return api.New(ip, port)
     }
