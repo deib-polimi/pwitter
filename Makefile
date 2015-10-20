@@ -9,3 +9,6 @@ clean:
 
 fullclean: clean
 	docker rmi pwitter_web
+
+client:
+	docker build -t pwitter -f Dockerfile.client .

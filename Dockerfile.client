@@ -1,0 +1,9 @@
+FROM golang:1.4.3
+
+RUN mkdir -p "$GOPATH/src/github.com/affo/pwitter"
+WORKDIR $GOPATH/src/github.com/affo/pwitter
+COPY cli/ .
+RUN go-wrapper download
+RUN go-wrapper install
+
+ENTRYPOINT ["pwitter"]
