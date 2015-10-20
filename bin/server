@@ -1,2 +1,9 @@
 #!/bin/bash
-python pwitter/server.py
+# check if gunicorn is installed
+gunicorn=`pip list | awk '/gunicorn/{print $1}'`
+
+if [ -z $gunicorn ]; then
+    python pwitter/server.py
+else
+    gunicorn -b 0.0.0.0:5000 "$@" pwitter.server:app
+fi
