@@ -1,7 +1,7 @@
 all: run
 
 run:
-	docker-compose up
+	docker-compose up -d
 
 clean:
 	docker rm -f pwitter_web_1
