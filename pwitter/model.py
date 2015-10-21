@@ -1,6 +1,6 @@
 from schematics.models import Model
 from schematics.types import StringType, FloatType
-import redis, json
+import redis, uuid, json
 
 from pwitter import config
 from textblob import TextBlob
@@ -13,11 +13,10 @@ _r = redis.StrictRedis(
 
 class Entity(Model):
     KEY_PREFIX = 'entity'
-    ID_KEY = 'ID'
 
     def __init__(self, *args, **kwargs):
         Model.__init__(self, *args, **kwargs)
-        self.ID = _r.get(self.ID_KEY) or 0
+        self.ID = str(uuid.uuid1())
 
     @property
     def key(self):
@@ -27,8 +26,6 @@ class Entity(Model):
         # using hashes
         # http://redis.io/commands#hash
         _r.hmset(self.key, self.to_primitive())
-        # increment global id
-        _r.incr(self.ID_KEY)
         self.on_save()
 
     def on_save(self):
