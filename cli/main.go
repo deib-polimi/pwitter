@@ -111,12 +111,16 @@ func main() {
                 np := c.Int("posts")
                 ch := newApi(c).Stress(ng, np)
 
+                ps := (np + ng) / 5
+                if ps == 0 {
+                    ps = 1
+                }
                 ok := 0
                 ko := 0
                 i := 0
                 for r := range ch {
                     i++
-                    if(i % ((np + ng) / 5) == 0) {
+                    if(i % ps == 0) {
                         fmt.Printf("%d completed\n", i)
                     }
 
