@@ -1,0 +1,33 @@
+#!/bin/bash
+if [[ $# -eq 0 ]]; then
+    echo "Usage:"
+    echo "  templater key=value ... inputfile"
+    echo
+    echo "Sample input file:"
+    echo "  Hello \${name}, enjoy templater!"
+    echo
+    echo "Sample output:"
+    echo "  $ ./templater name=Affo input"
+    echo "  Hello Affo, enjoy templater!"
+    echo
+    exit
+fi
+
+args=( "$@" )
+fname=${args[${#args[@]}-1]}
+unset "args[${#args[@]}-1]"
+
+cmd="sed"
+for arg in "${args[@]}"; do
+    if [[ "$arg" != *"="* ]]; then
+        continue
+    fi
+
+    key="${arg%=*}"
+    value="${arg#*=}"
+    cmd="$cmd -e 's/\${$key}/$value/g'"
+done
+
+cmd="$cmd $fname"
+
+eval $cmd

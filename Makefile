@@ -1,6 +1,9 @@
+WEB_OPTS=""
+
 all: run
 
 run: clean
+	./templater opts="$(WEB_OPTS)" docker-compose.yml.tmpl > docker-compose.yml
 	docker-compose up -d
 	echo "Web IP: "`docker inspect --format='{{.NetworkSettings.IPAddress}}' pwitter_web_1`
 

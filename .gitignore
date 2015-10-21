@@ -1,3 +1,4 @@
 *.pyc
 venv
 pwitter.conf
+*.yml
