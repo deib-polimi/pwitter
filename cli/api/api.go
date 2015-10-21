@@ -66,14 +66,21 @@ var sampleUsers []string = []string {
     "Sam",
 }
 
+func getPweet(fname string) string {
+    pweet, err := ioutil.ReadFile(fname)
+    if err != nil {
+        fmt.Println(err)
+        return ""
+    }
+    return string(pweet)
+}
+
 var sampleBodies []string = []string {
-    "There is only one Lord of the Ring, only one who can bend it to his will. And he does not share power.",
-    "That there’s some good in this world, Mr. Frodo, and it’s worth fighting for.",
-    "Oh, it’s quite simple. If you are a friend, you speak the password, and the doors will open.",
-    "A day may come when the courage of men fails, but it is not this day.",
-    "The Ring has awoken, it’s heard its masters call.",
-    "We swears, to serve the master of the Precious. We will swear on the Precious!",
-    "You are the luckiest, the canniest, and the most reckless man I ever knew. Bless you, laddie.",
+    getPweet("pweets/hr"),
+    getPweet("pweets/limits"),
+    getPweet("pweets/mushrooms"),
+    getPweet("pweets/orchestras"),
+    getPweet("pweets/sheik"),
 }
 
 func rndUserBody() (string, string) {
