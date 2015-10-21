@@ -13,21 +13,22 @@ func main() {
     app.Name = "pwitter"
     app.Usage = "Pwitter command line client"
 
-    ipFlag := cli.StringFlag {
-        Name: "host, H",
-        Usage: "The IP address of the web server",
-        Value: "localhost",
-    }
-
-    portFlag := cli.IntFlag {
-        Name: "port, p",
-        Usage: "The port of the web server",
-        Value: 5000,
+    app.Flags = []cli.Flag {
+        cli.StringFlag {
+            Name: "host, H",
+            Usage: "The IP address of the web server",
+            Value: "localhost",
+        },
+        cli.IntFlag {
+            Name: "port, p",
+            Usage: "The port of the web server",
+            Value: 5000,
+        },
     }
 
     newApi := func(c *cli.Context) *api.Api {
-        ip := c.String("host")
-        port := c.Int("port")
+        ip := c.GlobalString("host")
+        port := c.GlobalInt("port")
         return api.New(ip, port)
     }
 
@@ -36,8 +37,6 @@ func main() {
             Name: "get",
             Usage: "Get Pweets",
             Flags: []cli.Flag {
-                ipFlag,
-                portFlag,
                 cli.Float64Flag {
                     Name: "max, M",
                     Usage: "Max polarity for Pweets returned",
@@ -65,8 +64,6 @@ func main() {
             Name: "post",
             Usage: "Create a new Pweet",
             Flags: []cli.Flag {
-                ipFlag,
-                portFlag,
                 cli.StringFlag {
                     Name: "user, u",
                     Usage: "User name for this Pweet",
@@ -98,8 +95,6 @@ func main() {
             Name: "stress",
             Usage: "Stress endpoints",
             Flags: []cli.Flag {
-                ipFlag,
-                portFlag,
                 cli.IntFlag {
                     Name: "gets, G",
                     Usage: "Number of gets",
