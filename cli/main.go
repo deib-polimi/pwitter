@@ -94,6 +94,47 @@ func main() {
                 fmt.Println(r)
             },
         },
+        {
+            Name: "stress",
+            Usage: "Stress endpoints",
+            Flags: []cli.Flag {
+                ipFlag,
+                portFlag,
+                cli.IntFlag {
+                    Name: "gets, G",
+                    Usage: "Number of gets",
+                    Value: 0,
+                },
+                cli.IntFlag {
+                    Name: "posts, P",
+                    Usage: "Number of posts",
+                    Value: 0,
+                },
+            },
+            Action: func(c *cli.Context) {
+                ng := c.Int("gets")
+                np := c.Int("posts")
+                ch := newApi(c).Stress(ng, np)
+
+                ok := 0
+                ko := 0
+                i := 0
+                for r := range ch {
+                    i++
+                    if(i % ((np + ng) / 5) == 0) {
+                        fmt.Printf("%d completed\n", i)
+                    }
+
+                    if r {
+                        ok++
+                    } else {
+                        ko++
+                    }
+                }
+
+                fmt.Printf("\n%d\t--\tOK\n%d\t--\tKO\n", ok, ko)
+            },
+        },
     }
 
     app.Run(os.Args)
