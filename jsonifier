@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [[ $# -lt 2 ]]; then
+    echo ""
+    echo "Usage:"
+    echo "  jsonifier <filename> <label>"
+    echo ""
+    exit 1
+fi
+
+fname=$1
+label=$2
+output="${fname%*.*}.json"
+
+echo '{' > "$output"
+echo "  \"label\": \"$label\"," >> "$output"
+echo "  \"data\": [" >> "$output"
+while read line; do
+    if [[ "$line" == *":"* ]]; then
+        echo "    ${line#*:*}," >> "$output"
+    fi
+done < "$fname"
+# removing last comma in list to obtain a valid json
+sed -i '$ s/,$//' "$output"
+echo '  ]' >> "$output"
+echo '}' >> "$output"
+
+# removing python unicode string format
+sed -i "s/u'/'/g" "$output"
+# replacing ' with "
+sed -i "s/'/\"/g" "$output"

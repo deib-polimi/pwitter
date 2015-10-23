@@ -12,6 +12,12 @@ var makechart = function(data, id){
     var mem_ch = new Chart(mem_ctx);
     var spacing = 0.1;
 
+    var cpu_title = data['label'] + ' - (CPU)';
+    $('#' + id + '-cpu-title').text(cpu_title);
+    var mem_title = data['label'] + ' - (Memory)';
+    $('#' + id + '-mem-title').text(mem_title);
+    data = data['data'];
+
     var cpu_points = {
         labels: [],
         datasets: [
@@ -59,21 +65,21 @@ var makechart = function(data, id){
 
 
 $.getJSON(
-    "500get.json",
+    "g.json",
     function(data){
         makechart(data, 'g');
     }
 );
 
 $.getJSON(
-    "500post.json",
+    "p.json",
     function(data){
         makechart(data, 'p');
     }
 );
 
 $.getJSON(
-    "250get250post.json",
+    "gp.json",
     function(data){
         makechart(data, 'gp');
     }
