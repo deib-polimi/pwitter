@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+        <script src="makecharts.js"></script>
+        <style>
+            body {
+                font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+                color: #616161;
+            }
+
+            h2 {
+                text-align: center;
+            }
+
+            .container {
+                width: 90%;
+                margin: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <p>
+                <label for="g-cpu">
+                    <h2>500 Gets (CPU/Memory)</h2>
+                    <canvas id="g-cpu" width="550" height="500"></canvas>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <canvas id="g-mem" width="550" height="500"></canvas>
+                </label>
+            </p>
+            <p>
+                <label for="g-cpu">
+                    <h2>500 Posts (CPU/Memory)</h2>
+                    <canvas id="p-cpu" width="550" height="500"></canvas>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <canvas id="p-mem" width="550" height="500"></canvas>
+                </label>
+            </p>
+            <p>
+                <label for="g-cpu">
+                    <h2>250 Gets &amp; 250 Posts (CPU/Memory)</h2>
+                    <canvas id="gp-cpu" width="550" height="500"></canvas>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <canvas id="gp-mem" width="550" height="500"></canvas>
+                </label>
+            </p>
+        </div>
+
+    </body>
+</html>
