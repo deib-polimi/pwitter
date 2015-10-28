@@ -76,11 +76,11 @@ func getPweet(fname string) string {
 }
 
 var sampleBodies []string = []string {
-    getPweet("pweets/hr"),
-    getPweet("pweets/limits"),
-    getPweet("pweets/mushrooms"),
-    getPweet("pweets/orchestras"),
-    getPweet("pweets/sheik"),
+    getPweet("pweets/hr_long"),
+    getPweet("pweets/limits_long"),
+    getPweet("pweets/mushrooms_long"),
+    getPweet("pweets/orchestras_long"),
+    getPweet("pweets/sheik_long"),
 }
 
 func rndUserBody() (string, string) {
