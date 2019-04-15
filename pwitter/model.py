@@ -68,8 +68,7 @@ class Pweet(Entity):
     def on_save(self):
         _r.zadd(
             self._SET_KEY,
-            self.polarity, # the score
-            self.key
+            {self.key: self.polarity}
         )
 
     @classmethod
@@ -83,3 +82,11 @@ class Pweet(Entity):
             start=0, num=cls._LIMIT
         )
         return [cls.one(k) for k in keys]
+
+    def serialize(self):
+        return {
+            "body": self.body,
+            "polarity": self.polarity,
+            "subjectivity": self.subjectivity,
+            "user": self.user
+        }
