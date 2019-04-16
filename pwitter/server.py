@@ -34,7 +34,7 @@ def post():
     pweet.validate()
     pweet.save()
 
-    return jsonify(pweet), 201
+    return jsonify(pweet.serialize()), 201
 
 @app.errorhandler(ValidationError)
 @app.errorhandler(ConversionError)

@@ -1,13 +1,13 @@
-web:
-    build: .
-    dockerfile: Dockerfile.server
-    command: ${opts}
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    command: "${opts}"
     ports:
         - 5000:5000
     volumes:
         - .:/app
-    links:
-        - db
-
-db:
+  db:
     image: redis
